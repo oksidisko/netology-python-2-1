@@ -1,21 +1,28 @@
-cook_book = {
-  'яйчница': [
-    {'ingridient_name': 'яйца', 'quantity': 2, 'measure': 'шт.'},
-    {'ingridient_name': 'помидоры', 'quantity': 100, 'measure': 'гр.'}
-    ],
-  'стейк': [
-    {'ingridient_name': 'говядина', 'quantity': 300, 'measure': 'гр.'},
-    {'ingridient_name': 'специи', 'quantity': 5, 'measure': 'гр.'},
-    {'ingridient_name': 'масло', 'quantity': 10, 'measure': 'мл.'}
-    ],
-  'салат': [
-    {'ingridient_name': 'помидоры', 'quantity': 100, 'measure': 'гр.'},
-    {'ingridient_name': 'огурцы', 'quantity': 100, 'measure': 'гр.'},
-    {'ingridient_name': 'масло', 'quantity': 100, 'measure': 'мл.'},
-    {'ingridient_name': 'лук', 'quantity': 1, 'measure': 'шт.'}
-    ]
-  }
+def read_cook_book(filename):
 
+  f = open(filename, 'r')
+  while 1 == 1:
+    line = f.readline();
+
+    if line == '':
+      break
+
+    dish_name = line.strip()
+    ingridient_count = int(f.readline().strip())
+    ingridients = []
+
+    for i in range(0, ingridient_count):
+      ingridients_line = f.readline().strip()
+      ingridients_row = ingridients_line.split('|')
+      ingridients.append({
+        'ingridient_name': ingridients_row[0].strip(),
+        'quantity': int(ingridients_row[1].strip()),
+        'measure': ingridients_row[2].strip()
+      })
+
+    cook_book[dish_name] = ingridients;
+
+cook_book = {}
 
 def get_shop_list_by_dishes(dishes, person_count):
   shop_list = {}
@@ -42,4 +49,5 @@ def create_shop_list():
   shop_list = get_shop_list_by_dishes(dishes, person_count)
   print_shop_list(shop_list)
 
+read_cook_book('./data.txt')
 create_shop_list()
